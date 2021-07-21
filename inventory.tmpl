@@ -1,0 +1,13 @@
+[web]
+%{ for ip in web_ip ~}
+${ip}
+%{ endfor ~}
+
+[proxy]
+%{ for ip in proxy_ip ~}
+${ip}
+%{ endfor ~}
+
+[ng-hosts:children]
+web
+proxy
