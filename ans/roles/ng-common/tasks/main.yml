@@ -1,0 +1,29 @@
+---
+# tasks file for common
+- name: Generate config
+  template:
+    dest: /etc/nginx/nginx.conf
+    src: nginx.conf.j2
+  notify: reload nginx
+  tags: configuration
+
+- name: LoadBalancer-removeDefault
+  file:
+    path: /etc/nginx/conf.d/default.conf
+    state: absent
+  when: "'proxy' in group_names"
+
+- name: LoadBalancer
+  template:
+    src: proxy.conf.j2
+    dest: /etc/nginx/conf.d/proxy.conf
+  notify: reload nginx
+  when: "'proxy' in group_names"
+
+
+- name: WebServer
+  copy:
+    src: index.html
+    dest: /usr/share/nginx/html/index.html
+  notify: reload nginx
+  when: "'web' in group_names"

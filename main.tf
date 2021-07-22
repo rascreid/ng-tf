@@ -44,3 +44,17 @@ resource "digitalocean_droplet" "proxy" {
     ssh_keys = [digitalocean_ssh_key.LexKey.fingerprint]
     tags     = [digitalocean_tag.module.id,digitalocean_tag.email.id]
 }
+
+
+#######################
+#      CONFIGURE      #
+#######################
+
+resource "null_resource" "Ansible" {
+  depends_on = [
+    local_file.AnsibleInventory
+  ]
+  provisioner "local-exec" {
+    command = "sleep 45 && ansible-playbook ans/ng-role-playbook.yaml -i ans/inventory -u root"
+  }
+}

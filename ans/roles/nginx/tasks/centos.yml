@@ -1,0 +1,28 @@
+---
+# tasks file for nginx
+    - name: Install epel on CentOS
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Configure Nginx repo on CentOS
+      yum_repository:
+        name: nginx
+        baseurl: "https://nginx.org/packages/mainline/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/"
+        description: NGINX Repository
+        enabled: true
+        gpgcheck: false
+        mode: 0644
+
+    - name: Install Nginx on CentOS
+      yum:
+        name: "nginx-{{ nginx_ver }}"
+        state: present
+      notify: run nginx
+
+    - name: add rule
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+        zone: public

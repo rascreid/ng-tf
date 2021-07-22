@@ -1,9 +1,0 @@
-[web]
-104.248.121.189
-
-[proxy]
-167.99.235.84
-
-[ng-hosts:children]
-web
-proxy
