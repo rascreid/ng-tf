@@ -1,13 +1,13 @@
 [web]
-%{ for ip in web_ip ~}
-${ip}
+%{ for index, dns in web_dns ~}
+${dns} ansible_host=${web_ip[index]}
 %{ endfor ~}
 
-[proxy]
-%{ for ip in proxy_ip ~}
-${ip}
+[lb]
+%{ for index, dns in lb_dns ~}
+${dns} ansible_host=${lb_ip[index]}
 %{ endfor ~}
 
 [ng-hosts:children]
 web
-proxy
+lb

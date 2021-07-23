@@ -1,7 +1,12 @@
 ---
-- name: Install Nginx
-  hosts: all
+- name: Configure Web Servers
+  hosts: web
   become: yes
-
   roles:
-    - role: ng-common
+    - role: ng-web
+
+- name: Configure LB Servers
+  hosts: lb
+  become: yes
+  roles:
+    - role: ng-lb

@@ -1,0 +1,13 @@
+---
+# tasks file for ng-web
+- name: WebServer
+  copy:
+    src: index.html
+    dest: /usr/share/nginx/html/index.html
+  notify: reload nginx
+
+- name: WebConfig
+  template:
+    src: web.conf.j2
+    dest: /etc/nginx/conf.d/web.conf
+  notify: reload nginx

@@ -1,0 +1,7 @@
+---
+# tasks file for ng-lb
+- name: LoadBalancer
+  template:
+    src: lb.conf.j2
+    dest: /etc/nginx/conf.d/lb.conf
+  notify: reload nginx

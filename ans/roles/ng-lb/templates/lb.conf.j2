@@ -1,5 +1,7 @@
 upstream web {
-   server {{ hostvars[groups['web'][0]]['ansible_eth0']['ipv4']['address'] }};
+{%- for host in groups['web'] %}
+    server {{ host }};
+{% endfor %}
 }
 
 
